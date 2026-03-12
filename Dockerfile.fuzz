@@ -13,6 +13,8 @@ RUN apt-get update -y \
         libtool \
         automake \
         autoconf \
+        afl++ \
+        llvm \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -21,3 +23,9 @@ WORKDIR /workspace
 
 # Copy source code
 COPY . .
+
+# git submodule update --init && autoreconf -i && \
+# export AFL_USE_ASAN=1 && \
+# CC=afl-clang-lto CXX=afl-clang-lto++ AR=llvm-ar RANLIB=llvm-ranlib \
+# ./configure --with-oniguruma=builtin && \
+# make clean && make -j8

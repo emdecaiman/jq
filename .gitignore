@@ -58,3 +58,5 @@ cscope.in.out
 cscope.out
 cscope.po.out
 jq.dSYM
+
+output/
