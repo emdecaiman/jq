@@ -1,0 +1,23 @@
+# Build environment
+FROM ubuntu:noble
+
+# Install Ubuntu packages
+RUN apt-get update -y \
+    && DEBIAN_FRONTEND="noninteractive" apt-get install -y \
+        git \
+        make \
+        cmake \
+        clang \
+        gdb \
+        valgrind \
+        libtool \
+        automake \
+        autoconf \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /workspace
+
+# Copy source code
+COPY . .
