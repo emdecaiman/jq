@@ -1,0 +1,7 @@
+services:
+  ubuntu-fuzz:
+    container_name: ubuntu-fuzz
+    build:
+      dockerfile: Dockerfile.fuzz
+    restart: unless-stopped
+    tty: true
