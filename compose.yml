@@ -5,3 +5,11 @@ services:
       dockerfile: Dockerfile.fuzz
     restart: unless-stopped
     tty: true
+
+  afl:
+    container_name: afl
+    # image: aflplusplus/aflplusplus:stable
+    build:
+      dockerfile: Dockerfile.afl
+    restart: unless-stopped
+    tty: true
