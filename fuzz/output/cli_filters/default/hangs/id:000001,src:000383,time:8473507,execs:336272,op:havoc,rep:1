@@ -1,0 +1,1 @@
+[range(-52;5555555555555555555555555552;1)] as $powers | [$powers[]|pow(2;.)|log2|round] == $powers
