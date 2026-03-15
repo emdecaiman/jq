@@ -1,0 +1,12 @@
+cli_filters: 736
+cli_json: 958
+compile: 755
+dictionaries: 2
+execute: 128
+fixed: 241
+load_file: 970
+module_filters: 12
+module_fixture: 8
+parse: 970
+parse_extended: 85
+parse_stream: 970

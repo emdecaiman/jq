@@ -1,0 +1,1 @@
+strftime("%A, %B %d, %Y")

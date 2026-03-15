@@ -1,0 +1,1 @@
+[foreach range(5) as $item (0; $item)]\!"Array index too large"\!{"foo":{"bar":4},"baz":"bar"}\!

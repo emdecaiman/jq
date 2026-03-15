@@ -1,0 +1,1 @@
+. as {(true):$foo} | $foo

@@ -1,0 +1,1 @@
+walk(select(IN({}, []) | not))

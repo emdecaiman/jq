@@ -1,0 +1,1 @@
+try (.foo[-2] = 0) catch .\!{"foo": {"bar": 42}, "bar": "badvalue"}\![1,2,3,4,true,false,1,2,3,4,5]\!

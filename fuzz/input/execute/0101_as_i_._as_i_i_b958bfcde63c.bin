@@ -1,0 +1,1 @@
+. as [$i] | . as $i | $i\!"skip doesn't support negative count"\!"[1]"\!

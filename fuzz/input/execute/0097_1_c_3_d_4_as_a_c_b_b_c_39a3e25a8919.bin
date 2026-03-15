@@ -1,0 +1,1 @@
+[1, {c:3, d:4}] as [$a, {c:$b, b:$c}] | $a, $b, $c\!"limit doesn't support negative count"\!{"bar": 9001, "baz": 42}\!

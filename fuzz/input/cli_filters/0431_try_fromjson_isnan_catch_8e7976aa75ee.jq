@@ -1,0 +1,1 @@
+.[] | try (fromjson | isnan) catch .

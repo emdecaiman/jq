@@ -1,0 +1,22 @@
+I’m checking for any task-specific fuzzing or corpus-generation workflow first, then I’ll build and package a jq seed corpus with useful structured edge cases for AFL++.
+
+I’ve confirmed jq already ships multiple fuzz targets in tests/, so I’m making the corpus harness-aware: separate filter and JSON seed sets, then validating seeds against the local jq 1.7 binary.
+
+The seed sets are built and validated; I’m packaging them as runnable AFL++ directories with dictionaries, a manifest, and a validation script. I’m also documenting the non-text harness quirks, especially binary parse_extended seeds and delimiter-packed execute seeds for FuzzedDataProvider.
+
+Done.
+
+Files:
+[jq_aflpp_corpus.zip](sandbox:/mnt/data/jq_aflpp_corpus.zip)
+[README.md](sandbox:/mnt/data/jq_aflpp_corpus/README.md)
+[COUNTS.txt](sandbox:/mnt/data/jq_aflpp_corpus/COUNTS.txt)
+[generator script](sandbox:/mnt/data/generate_jq_aflpp_corpus.py)
+
+I split the corpus by jq’s actual fuzzing surfaces instead of shipping one mixed seed directory. The bundle has separate inputs for `jq_fuzz_compile`, `jq_fuzz_execute`, `jq_fuzz_fixed`, `jq_fuzz_load_file`, `jq_fuzz_parse`, `jq_fuzz_parse_extended`, and `jq_fuzz_parse_stream`. The `execute/` seeds are delimiter-packed for LLVM `FuzzedDataProvider::ConsumeRandomLengthString()`, `fixed/` seeds are packed for its two-string-plus-selector layout, and `parse_extended/` seeds begin with jq’s parse/print flag words from `jv.h`. ([GitHub][1])
+
+The zip currently contains 755 `compile` seeds, 736 `cli_filters`, 958 `cli_json`, 128 `execute`, 241 `fixed`, 970 each for `parse`/`parse_stream`/`load_file`, 85 `parse_extended`, 12 `module_filters`, 8 module fixture files, and 2 optional dictionaries. I also included a module fixture tree plus CLI-ready module seeds so you can fuzz `import`/`include` paths separately.
+
+For the seed material, I pulled from jq’s own test corpus and `.jq` files, and I added synthetic edge cases for BOM-prefixed JSON, deep nesting, JSON sequences, multi-root inputs, malformed JSON, and streaming-heavy compound documents. That lines up with jq’s own discussion of AFL seeding from test `.jq` files plus `tests/torture/input0.json`, jq’s documented `--stream` / `--stream-errors` / `--seq` modes, and AFL++ guidance to start from diverse real inputs, then deduplicate/minimize with `afl-cmin`; I removed exact duplicates, but I did not run coverage-based minimization because AFL++ and instrumented jq targets were not available in this container. ([GitHub][2])
+
+[1]: https://github.com/jqlang/jq/tree/master/tests "https://github.com/jqlang/jq/tree/master/tests"
+[2]: https://github.com/jqlang/jq/issues/3174 "https://github.com/jqlang/jq/issues/3174"

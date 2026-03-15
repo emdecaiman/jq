@@ -1,0 +1,1 @@
+@text,@json,([1,.]|@csv,@tsv),@html,(@uri|.,@urid),@sh,(@base64|.,@base64d)\!"Aa\\u000d\\u000a\\u0009\\u0008\\u000c\\u03bc"\![0,2,1]\!

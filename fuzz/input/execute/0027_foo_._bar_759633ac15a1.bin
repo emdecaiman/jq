@@ -1,0 +1,1 @@
+."foo"."bar"\!"<script>hax</script>"\!"string (\\"true\\\\u0000x\\") cannot be parsed as a boolean"\!
