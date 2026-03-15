@@ -11,6 +11,7 @@ services:
     build:
       dockerfile: Dockerfile.afl
     restart: unless-stopped
+    privileged: true 
     tty: true
     volumes:
       - .:/workspace
