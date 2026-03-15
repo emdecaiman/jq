@@ -1,0 +1,1 @@
+map(try implode catch .)

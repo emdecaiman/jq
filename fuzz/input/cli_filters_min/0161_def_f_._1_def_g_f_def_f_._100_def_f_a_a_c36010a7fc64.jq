@@ -1,0 +1,1 @@
+def f: .+1; def g: f; def f: .+100; def f(a):a+.+11; [(g|f(20)), f]
