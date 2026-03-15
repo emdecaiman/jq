@@ -60,3 +60,4 @@ cscope.po.out
 jq.dSYM
 
 output/
+fuzz-output/

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-afl-fuzz -i fuzz-corpus -o output -- ./jq '.' @@
+afl-fuzz -i fuzz-corpus -o fuzz-output -- ./jq '.' @@
 
