@@ -1,0 +1,1 @@
+fromstream(inputs)

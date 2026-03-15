@@ -60,4 +60,7 @@ cscope.po.out
 jq.dSYM
 
 output/
-fuzz-output/
+fuzz/output/
+_filters/
+jq-asan-ubsan
+jq-msan
