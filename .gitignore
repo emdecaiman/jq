@@ -64,3 +64,5 @@ fuzz/output/
 _filters/
 jq-asan-ubsan
 jq-msan
+jq-asan
+jq-ubsan
