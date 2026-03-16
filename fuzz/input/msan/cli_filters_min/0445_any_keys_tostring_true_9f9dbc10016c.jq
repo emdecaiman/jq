@@ -1,0 +1,1 @@
+any(keys[]|tostring?;true)

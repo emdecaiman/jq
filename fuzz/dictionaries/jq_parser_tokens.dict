@@ -1,0 +1,227 @@
+# ===== tokens from parser.y =====
+
+".."
+"%="
+"=="
+"!="
+"//"
+"|="
+"+="
+"-="
+"*="
+"/="
+"%="
+"<="
+">="
+"<"
+">"
+"="
+"|"
+","
+":"
+";"
+"."
+"?"
+"!"
+"("
+")"
+"["
+"]"
+"{"
+"}"
+
+# ===== keywords =====
+
+"as"
+"def"
+"module"
+"import"
+"include"
+"if"
+"then"
+"else"
+"elif"
+"reduce"
+"foreach"
+"end"
+"and"
+"or"
+"try"
+"catch"
+"label"
+"break"
+
+# ===== special tokens =====
+
+"$__loc__"
+
+# ===== literals =====
+
+"true"
+"false"
+"null"
+
+# ===== identifiers / bindings =====
+
+"$x"
+"$y"
+"$z"
+"$var"
+"$a"
+"$b"
+
+".foo"
+".bar"
+".baz"
+
+"foo"
+"bar"
+"baz"
+"f"
+"g"
+"h"
+
+# ===== field tokens =====
+
+".a"
+".b"
+".c"
+".test"
+".key"
+".value"
+
+# ===== indexing =====
+
+".[]"
+".[]?"
+".[0]"
+".[1]"
+".[0:1]"
+".[1:2]"
+".[:]"
+".[1:]"
+".[-1]"
+".[.a]"
+".[.[]]"
+
+# ===== object grammar =====
+
+"{}"
+"{.}"
+"{:}"
+"{a:.}"
+"{a:.b}"
+"{a,b}"
+"{a,b:c}"
+"{a:.,b:.}"
+"{(.):.}"
+
+# ===== array grammar =====
+
+"[]"
+"[.]"
+"[.[]]"
+"[.,.]"
+"[.a,.b]"
+"[.a,.b,.c]"
+
+# ===== pipe / comma grammar =====
+
+".|."
+".|"
+"|."
+".|="
+".="
+".[]|"
+".foo|="
+".foo="
+
+# ===== assignment grammar =====
+
+". = ."
+".foo = ."
+".foo |= ."
+".[] |= ."
+". += 1"
+". -= 1"
+". *= 2"
+". /= 2"
+". %= 2"
+". //= ."
+
+# ===== control grammar =====
+
+"if . then . else . end"
+"if . then . elif . then . else . end"
+"try . catch ."
+"label $x | break $x"
+
+# ===== reduce / foreach =====
+
+"reduce .[] as $x (0; .+$x)"
+"foreach .[] as $x (0; .+$x; .)"
+". as $x | $x"
+". as $x | $x | $x"
+
+# ===== function grammar =====
+
+"def f: .;"
+"def f($x): $x;"
+"def f: . | .;"
+"def f($x; $y): $x + $y;"
+"def f: if . then . else . end;"
+"def f: reduce .[] as $x (0; .+$x);"
+"def f: foreach .[] as $x (0; .+$x; .);"
+
+# ===== module grammar =====
+
+"module {}"
+"import \"a\""
+"include \"a\""
+"import \"a\" as b"
+"include \"a\" as b"
+
+# ===== calls =====
+
+"f()"
+"f(.)"
+"f(. ; .)"
+"map(.)"
+"select(.)"
+"length"
+"keys"
+"type"
+
+# ===== strings =====
+
+"\"\""
+"\"a\""
+"\"test\""
+"\"key\""
+"\"value\""
+"\"abc\""
+"\"123\""
+
+# ===== numbers =====
+
+"0"
+"1"
+"-1"
+"10"
+"100"
+"1.0"
+"-1.0"
+"1e10"
+"-1e10"
+
+# ===== complex combos =====
+
+".[] | select(.foo == 1)"
+".foo | .bar | .baz"
+"{a: .b, c: .d}"
+"[.a, .b, .c]"
+"reduce .[] as $x (0; .+$x)"
+"foreach .[] as $x (0; .+$x; .)"
+"if .a then .b else .c end"
+"try .a catch .b"
+". as $x | $x.foo"
