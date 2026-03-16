@@ -9,7 +9,10 @@
 # To check the status of the fuzzing campaign, run:
 # `afl-whatsup -s fuzz/output/sync`
 
-MEMORY_LIMIT=$((1048576 * 500)) # 500 MiB, to avoid OOM kills on the fuzzers 
+MEMORY_LIMIT=$((1048576 * 300)) # 300 MiB, to avoid OOM kills on the fuzzers 
+DICT="fuzz/dictionaries/jq_grammar.dict"
+
+
 AFL_TESTCACHE_SIZE=$((1048576 * 500)) # 500 MiB
 AFL_AUTORESUME=1
 AFL_SKIP_CPUFREQ=1
@@ -17,14 +20,19 @@ AFL_IGNORE_SEED_PROBLEMS=1
 AFL_I_DONT_CARE_ABOUT_MISSING_CRASHES=0
 AFL_LLVM_LAF_ALL=1
 AFL_FINAL_SYNC=1
-AFL_IMPORT_FIRST=1
+# AFL_IMPORT_FIRST=1
 
 mkdir -p fuzz/output/sync
 
-screen -dmS "fuzzer01_asan_ubsan" afl-fuzz -M "fuzzer01_asan_ubsan" -i fuzz/input/cli_filters_min -o fuzz/output/sync -t 10000 -m $MEMORY_LIMIT -- ./jq-asan-ubsan -f @@ fuzz/input/input0.json
-screen -dmS "fuzzer02_asan_ubsan_dict" afl-fuzz -S "fuzzer02_asan_ubsan_dict" -x fuzz/dictionaries/jq_grammar.dict -i fuzz/input/cli_filters_min -o fuzz/output/sync -t 10000 -m $MEMORY_LIMIT -- ./jq-asan-ubsan -f @@ fuzz/input/input0.json
-screen -dmS "fuzzer03_msan" afl-fuzz -S "fuzzer03_msan" -x fuzz/dictionaries/jq_grammar.dict -i fuzz/input/cli_filters_min -o fuzz/output/sync -t 10000 -m $MEMORY_LIMIT -- ./jq-msan -f @@ fuzz/input/input0.json
-screen -dmS "fuzzer04_msan_dict" afl-fuzz -S "fuzzer04_msan_dict" -x fuzz/dictionaries/jq_grammar.dict -i fuzz/input/cli_filters_min -o fuzz/output/sync -t 10000 -m $MEMORY_LIMIT -- ./jq-msan -f @@ fuzz/input/input0.json
-screen -dmS "fuzzer05_asan_ubsan_mopt" afl-fuzz -S "fuzzer05_asan_ubsan_mopt" -i fuzz/input/cli_filters_min -o fuzz/output/sync -L 0 -t 10000 -m $MEMORY_LIMIT -- ./jq-msan -f @@ fuzz/input/input0.json
-screen -dmS "fuzzer06_asan_ubsan_exploit" afl-fuzz -S "fuzzer06_asan_ubsan_exploit" -i fuzz/input/cli_filters_min -o fuzz/output/sync -p exploit -t 10000 -m $MEMORY_LIMIT -- ./jq-msan -f @@ fuzz/input/input0.json
+screen -dmS "asan_ubsan" afl-fuzz -M "asan_ubsan" -i fuzz/input/cli_filters_min -o fuzz/output/sync -t 10000 -m $MEMORY_LIMIT -- ./jq-asan-ubsan -f @@ fuzz/input/input0.json
+screen -dmS "asan_ubsan_dict" afl-fuzz -S "asan_ubsan_dict" -x $DICT -i fuzz/input/cli_filters_min -o fuzz/output/sync -t 10000 -m $MEMORY_LIMIT -- ./jq-asan-ubsan -f @@ fuzz/input/input0.json
+screen -dmS "asan_ubsan_dict_fast" afl-fuzz -S "asan_ubsan_dict_fast" -x $DICT -i fuzz/input/cli_filters_min -o fuzz/output/sync -p fast -t 10000 -m $MEMORY_LIMIT -- ./jq-asan-ubsan -f @@ fuzz/input/input0.json
+screen -dmS "asan_ubsan_dict_exploit" afl-fuzz -S "asan_ubsan_dict_exploit" -x $DICT -i fuzz/input/cli_filters_min -o fuzz/output/sync -p exploit -t 10000 -m $MEMORY_LIMIT -- ./jq-asan-ubsan -f @@ fuzz/input/input0.json
+# screen -dmS "asan_ubsan_dict_mmopt" afl-fuzz -S "asan_ubsan_dict_mmopt" -x $DICT -i fuzz/input/cli_filters_min -o fuzz/output/sync -L 0 -p mmopt -t 10000 -m $MEMORY_LIMIT -- ./jq-asan-ubsan -f @@ fuzz/input/input0.json
+
+screen -dmS "msan" afl-fuzz -S "msan" -i fuzz/input/cli_filters_min -o fuzz/output/sync -t 10000 -m $MEMORY_LIMIT -- ./jq-msan -f @@ fuzz/input/input0.json
+screen -dmS "msan_dict" afl-fuzz -S "msan_dict" -x $DICT -i fuzz/input/cli_filters_min -o fuzz/output/sync -t 10000 -m $MEMORY_LIMIT -- ./jq-msan -f @@ fuzz/input/input0.json
+# screen -dmS "msan_dict_fast" afl-fuzz -S "msan_dict_fast" -x $DICT -i fuzz/input/cli_filters_min -o fuzz/output/sync -p fast -t 10000 -m $MEMORY_LIMIT -- ./jq-msan -f @@ fuzz/input/input0.json
+# screen -dmS "msan_dict_exploit" afl-fuzz -S "msan_dict_exploit" -x $DICT -i fuzz/input/cli_filters_min -o fuzz/output/sync -p exploit -t 10000 -m $MEMORY_LIMIT -- ./jq-msan -f @@ fuzz/input/input0.json
+# screen -dmS "msan_dict_mmopt" afl-fuzz -S "msan_dict_mmopt" -x $DICT -i fuzz/input/cli_filters_min -o fuzz/output/sync -L 0 -p mmopt -t 10000 -m $MEMORY_LIMIT -- ./jq-msan -f @@ fuzz/input/input0.json
 
